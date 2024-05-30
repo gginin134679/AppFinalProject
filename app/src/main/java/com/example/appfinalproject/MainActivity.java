@@ -22,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
       public void onClick(View v) {
         if (v.getId() == R.id.btn_main_personal) {
           Intent intent = new Intent();
-          intent.setClass(MainActivity.this, Login.class);
+          intent.setClass(MainActivity.this, SigninActivity.class);
           MainActivity.this.startActivity(intent);
         }
+
       }
     };
     btnMainPersonal.setOnClickListener(listener);
