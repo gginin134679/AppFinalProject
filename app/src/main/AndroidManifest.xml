@@ -13,6 +13,12 @@
         android:theme="@style/Theme.AppFinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Search"
+            android:exported="false" />
+        <activity
             android:name=".SigninActivity"
             android:exported="true" />
         <activity
