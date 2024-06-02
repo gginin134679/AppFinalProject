@@ -143,5 +143,12 @@
             android:layout_marginEnd="36dp"
             android:layout_weight="1"
             android:text="借閱紀錄" />
+
+        <Button
+            android:id="@+id/btn_profile_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="登出" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

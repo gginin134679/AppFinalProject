@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/et_signup_mail"
+        android:id="@+id/et_signup_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -73,10 +73,10 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/et_signup_mail"
+        app:layout_constraintEnd_toEndOf="@+id/et_signup_email"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/et_signup_mail"
-        app:layout_constraintTop_toBottomOf="@+id/et_signup_mail" />
+        app:layout_constraintStart_toStartOf="@+id/et_signup_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_signup_email" />
 
     <CheckBox
         android:id="@+id/cb_signup_info"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/et_signup_password" />
 
     <Button
-        android:id="@+id/btn_signup"
+        android:id="@+id/btn_signup_signup"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -105,9 +105,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Forget your password?"
-        app:layout_constraintEnd_toEndOf="@+id/btn_signup"
-        app:layout_constraintStart_toStartOf="@+id/btn_signup"
-        app:layout_constraintTop_toBottomOf="@+id/btn_signup" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_signup_signup"
+        app:layout_constraintStart_toStartOf="@+id/btn_signup_signup"
+        app:layout_constraintTop_toBottomOf="@+id/btn_signup_signup" />
 
     <CheckBox
         android:id="@+id/cb_signup_show"

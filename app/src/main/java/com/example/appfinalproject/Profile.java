@@ -13,14 +13,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Profile extends AppCompatActivity {
     private Button btnProfileHome;
     private Button btnProfileSearch;
     private Button btnProfileBack;
+    private Button btnProfileLogout;
     private Button btnLog;
     private Button btnBook;
     private ImageView profilePic;
     private TextView tvEmail;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +34,15 @@ public class Profile extends AppCompatActivity {
         btnProfileHome = findViewById(R.id.btn_profile_home);
         btnProfileBack = findViewById(R.id.btn_profile_back);
         btnProfileSearch = findViewById(R.id.btn_profile_search);
+        btnProfileLogout = findViewById(R.id.btn_profile_logout);
         btnLog = findViewById(R.id.btn_profile_log);
         btnBook = findViewById(R.id.btn_profile_book);
         profilePic = findViewById(R.id.iv_profile_pic);
         tvEmail = findViewById(R.id.tv_email);
+        mAuth = FirebaseAuth.getInstance();
 
+        String email = mAuth.getCurrentUser().getEmail();
+        tvEmail.setText("Email: " + email);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,11 +58,16 @@ public class Profile extends AppCompatActivity {
                 else if (v.getId() == R.id.btn_profile_search) {
                     intent.setClass(Profile.this, Search.class);
                     Profile.this.startActivity(intent);
+                }else if(v.getId() == R.id.btn_profile_logout) {
+                    mAuth.signOut();
+                    intent.setClass(Profile.this, MainActivity.class);
+                    Profile.this.startActivity(intent);
                 }
             }
         };
         btnProfileBack.setOnClickListener(listener);
         btnProfileHome.setOnClickListener(listener);
         btnProfileSearch.setOnClickListener(listener);
+        btnProfileLogout.setOnClickListener(listener);
     }
 }
