@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
   private Button btnMainSearch;
   private Button btnMainLogIn;
   private FirebaseAuth mAuth;
+  ManagerInformation managerInformation = ManagerInformation.getInstance();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
