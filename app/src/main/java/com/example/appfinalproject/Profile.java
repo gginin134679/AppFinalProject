@@ -46,7 +46,6 @@ public class Profile extends AppCompatActivity {
         String email = mAuth.getCurrentUser().getEmail();
         tvEmail.setText("Email: " + email);
 
-        if(email.toString().equals(managerInformation.managerEmail)){managerInformation.isManager = true;}
         if(managerInformation.isManager == true){tvMemberInformation.setText("管理者資訊");}
 
         View.OnClickListener listener = new View.OnClickListener() {
@@ -65,6 +64,7 @@ public class Profile extends AppCompatActivity {
                     intent.setClass(Profile.this, Search.class);
                     Profile.this.startActivity(intent);
                 }else if(v.getId() == R.id.btn_profile_logout) {
+                    managerInformation.isManager = false;
                     mAuth.signOut();
                     intent.setClass(Profile.this, MainActivity.class);
                     Profile.this.startActivity(intent);

@@ -39,6 +39,10 @@ public class SigninActivity extends AppCompatActivity {
                 if (v.getId() == R.id.btn_login_login) {
                     String email = etLoginEmail.getText().toString();
                     String password = etLoginPassword.getText().toString();
+                    //管理者判斷式
+                    if(email.toString().equals(managerInformation.managerEmail)){managerInformation.isManager = true;}
+                    else{managerInformation.isManager = false;}
+
                     signIn(email,password);
                 }else if (v.getId() == R.id.btn_login_signup) {
                     Intent intent = new Intent();

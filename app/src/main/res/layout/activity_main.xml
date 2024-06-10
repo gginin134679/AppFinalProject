@@ -59,6 +59,7 @@
             android:text="首頁" />
 
         <Button
+            android:id="@+id/btn_main_book_manager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -92,17 +93,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_main">
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="horizontal">
 
             <!-- multiple button views to show a
                   scrollable horizontal list -->
@@ -110,11 +108,11 @@
                 android:id="@+id/C"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:text="GeeksforGeeks"
-                android:padding="4dp"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
-                android:textColor="@color/black"/>
+                android:padding="4dp"
+                android:text="GeeksforGeeks"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/Co"
@@ -130,41 +128,51 @@
                 android:id="@+id/L"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:padding="4dp"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
+                android:padding="4dp"
                 android:text="GeeksforGeeks"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/Ha"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:padding="4dp"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
+                android:padding="4dp"
                 android:text="GeeksforGeeks"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/Hah"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:padding="4dp"
-                android:backgroundTint="@color/white"
                 android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:padding="4dp"
                 android:text="GeeksforGeeks"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/ge"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:padding="4dp"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/white"
+                android:padding="4dp"
                 android:text="GeeksforGeeks"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
         </LinearLayout>
     </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="新書上架→右滑看更多→"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

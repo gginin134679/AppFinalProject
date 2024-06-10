@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
   private FirebaseAuth mAuth;
   ManagerInformation managerInformation = ManagerInformation.getInstance();
   private TextView tvMain;
-
+  private Button btnBookManager;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,9 +32,18 @@ public class MainActivity extends AppCompatActivity {
     btnMainSearch = findViewById(R.id.btn_main_search);
     btnMainLogIn = findViewById(R.id.btn_main_logIn);
     mAuth = FirebaseAuth.getInstance();
-    tvMain = findViewById(R.id.tv_main);
 
-    if(managerInformation.isManager = true){tvMain.setText("管理者");}
+    tvMain = findViewById(R.id.tv_main);
+    btnBookManager = findViewById(R.id.btn_main_book_manager);
+
+    if(managerInformation.isManager == true){
+      tvMain.setText("管理者");
+      btnBookManager.setText("管書");
+    }
+    else{
+      tvMain.setText("首頁");
+      btnBookManager.setText("未知");
+    }
     View.OnClickListener listener = new View.OnClickListener() {
       @Override
       public void onClick(View v) {
