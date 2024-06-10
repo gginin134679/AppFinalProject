@@ -43,6 +43,7 @@
         app:layout_constraintTop_toTopOf="@+id/tv_main" />
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -86,4 +87,84 @@
 
     </LinearLayout>
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_main">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <!-- multiple button views to show a
+                  scrollable horizontal list -->
+            <Button
+                android:id="@+id/C"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:text="GeeksforGeeks"
+                android:padding="4dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/Co"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:padding="4dp"
+                android:text="GeeksforGeeks"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/L"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:padding="4dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:text="GeeksforGeeks"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/Ha"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:padding="4dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:text="GeeksforGeeks"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/Hah"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:padding="4dp"
+                android:backgroundTint="@color/white"
+                android:layout_margin="10dp"
+                android:text="GeeksforGeeks"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/ge"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:padding="4dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/white"
+                android:text="GeeksforGeeks"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

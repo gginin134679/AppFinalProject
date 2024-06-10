@@ -48,6 +48,7 @@ public class Profile extends AppCompatActivity {
 
         if(email.toString().equals(managerInformation.managerEmail)){managerInformation.isManager = true;}
         if(managerInformation.isManager == true){tvMemberInformation.setText("管理者資訊");}
+
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

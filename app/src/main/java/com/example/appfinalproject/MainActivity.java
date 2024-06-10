@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
   private Button btnMainLogIn;
   private FirebaseAuth mAuth;
   ManagerInformation managerInformation = ManagerInformation.getInstance();
+  private TextView tvMain;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     btnMainSearch = findViewById(R.id.btn_main_search);
     btnMainLogIn = findViewById(R.id.btn_main_logIn);
     mAuth = FirebaseAuth.getInstance();
+    tvMain = findViewById(R.id.tv_main);
+
+    if(managerInformation.isManager = true){tvMain.setText("管理者");}
     View.OnClickListener listener = new View.OnClickListener() {
       @Override
       public void onClick(View v) {
