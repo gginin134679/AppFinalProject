@@ -25,7 +25,8 @@ public class Profile extends AppCompatActivity {
     private ImageView profilePic;
     private TextView tvEmail;
     private FirebaseAuth mAuth;
-
+    private TextView tvMemberInformation;
+    ManagerInformation managerInformation = ManagerInformation.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +41,13 @@ public class Profile extends AppCompatActivity {
         profilePic = findViewById(R.id.iv_profile_pic);
         tvEmail = findViewById(R.id.tv_email);
         mAuth = FirebaseAuth.getInstance();
+        tvMemberInformation = findViewById(R.id.tv_menber_information);
 
         String email = mAuth.getCurrentUser().getEmail();
         tvEmail.setText("Email: " + email);
+
+        if(email.toString().equals(managerInformation.managerEmail)){managerInformation.isManager = true;}
+        if(managerInformation.isManager == true){tvMemberInformation.setText("管理者資訊");}
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

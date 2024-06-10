@@ -23,6 +23,7 @@ public class SigninActivity extends AppCompatActivity {
     private Button btnLoginLogin;
     private Button btnLoginSignUp;
     private FirebaseAuth mAuth;
+    ManagerInformation managerInformation = ManagerInformation.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
