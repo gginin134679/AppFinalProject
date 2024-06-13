@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Profile extends AppCompatActivity {
     private Button btnProfileHome;
     private Button btnProfileSearch;
-    private Button btnProfileBack;
+
     private Button btnProfileLogout;
     private Button btnLog;
     private Button btnBook;
@@ -33,7 +33,7 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         btnProfileHome = findViewById(R.id.btn_profile_home);
-        btnProfileBack = findViewById(R.id.btn_profile_back);
+
         btnProfileSearch = findViewById(R.id.btn_profile_search);
         btnProfileLogout = findViewById(R.id.btn_profile_logout);
         btnLog = findViewById(R.id.btn_profile_log);
@@ -52,11 +52,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                if(v.getId() == R.id.btn_profile_back){
-                    intent.setClass(Profile.this, MainActivity.class);
-                    Profile.this.startActivity(intent);
-                }
-                else if(v.getId() == R.id.btn_profile_home){
+                 if(v.getId() == R.id.btn_profile_home){
                     intent.setClass(Profile.this, MainActivity.class);
                     Profile.this.startActivity(intent);
                 }
@@ -66,12 +62,11 @@ public class Profile extends AppCompatActivity {
                 }else if(v.getId() == R.id.btn_profile_logout) {
                     managerInformation.isManager = false;
                     mAuth.signOut();
-                    intent.setClass(Profile.this, MainActivity.class);
+                    intent.setClass(Profile.this, SigninActivity.class);
                     Profile.this.startActivity(intent);
                 }
             }
         };
-        btnProfileBack.setOnClickListener(listener);
         btnProfileHome.setOnClickListener(listener);
         btnProfileSearch.setOnClickListener(listener);
         btnProfileLogout.setOnClickListener(listener);

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AppFinalProject</string>
+    <string name="app_name_chinese">藏書借閱</string>
+    <color name="grey_light">#E1E1E1</color>
+    <string name="please_wait">Please Wait</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>

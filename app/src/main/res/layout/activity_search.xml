@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Search">
 
-    <Button
-        android:id="@+id/btn_search_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Back"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -27,19 +15,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_search_back" />
-
-    <Button
-        android:id="@+id/btn_search_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginEnd="16dp"
-        android:text="filter"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="@+id/btn_search_back" />
+        tools:layout_editor_absoluteY="16dp" />
 
     <SearchView
         android:layout_width="400dp"
@@ -62,34 +38,23 @@
 
         <Button
             android:id="@+id/btn_search_home"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="首頁" />
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="未知" />
-
-        <Button
             android:id="@+id/button5"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="搜尋" />
 
         <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="未知" />
-
-        <Button
             android:id="@+id/btn_search_personal"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
