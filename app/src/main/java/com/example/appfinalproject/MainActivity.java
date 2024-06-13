@@ -1,5 +1,6 @@
 package com.example.appfinalproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -36,42 +41,28 @@ public class MainActivity extends AppCompatActivity {
 
   private FirebaseAuth mAuth;
   private ListView listViewBooks;
-  private DBHelper dbHelper;
+
   private ArrayList<Book> bookList;
   private BookAdapter adapter;
+  private FirebaseFirestore db;
+  private static final String TAG = "MainActivity";
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     btnMainPersonal = findViewById(R.id.btn_main_personal);
     btnMainSearch = findViewById(R.id.btn_main_search);
-
     listViewBooks = findViewById(R.id.listViewBooks);
-    dbHelper = new DBHelper(this);
-    bookList = new ArrayList<>();
     mAuth = FirebaseAuth.getInstance();
-
-    Cursor cursor = dbHelper.getAllBooks();
-    if (cursor.moveToFirst()) {
-      do {
-        String title = cursor.getString(cursor.getColumnIndex("title"));
-        String author = cursor.getString(cursor.getColumnIndex("author"));
-        String image = cursor.getString(cursor.getColumnIndex("image"));
-        bookList.add(new Book(title, author, image));
-      } while (cursor.moveToNext());
-    }
-    cursor.close();
-    adapter = new BookAdapter(this, bookList);
-    listViewBooks.setAdapter(adapter);
-    // 设置项点击事件
+    db = FirebaseFirestore.getInstance();
+    bookList = new ArrayList<>();
+    loadBooks();
     listViewBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Book selectedBook = bookList.get(position);
+        Book selectedBook = adapter.getItem(position);
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.putExtra("title", selectedBook.title);
-        intent.putExtra("author", selectedBook.author);
-        intent.putExtra("image", selectedBook.image);
+        intent.putExtra("documentId", selectedBook.getDocumentId());
         startActivity(intent);
       }
     });
@@ -100,17 +91,31 @@ public class MainActivity extends AppCompatActivity {
     btnMainPersonal.setOnClickListener(listener);
     btnMainSearch.setOnClickListener(listener);
   }
-  private class Book {
-    String title;
-    String author;
-    String image;
-
-    Book(String title, String author, String image) {
-      this.title = title;
-      this.author = author;
-      this.image = image;
-    }
+  private void loadBooks() {
+    // 从 Cloud Firestore 中读取书籍数据
+    db.collection("books")
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+              @Override
+              public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                  for (QueryDocumentSnapshot document : task.getResult()) {
+                    String title = document.getString("title");
+                    String author = document.getString("author");
+                    String image = document.getString("image");
+                    String documentId = document.getId();
+                    bookList.add(new Book(title, author, image,documentId));
+                  }
+                  // 数据加载完成后设置适配器
+                  adapter = new BookAdapter(MainActivity.this, bookList);
+                  listViewBooks.setAdapter(adapter);
+                } else {
+                  Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+              }
+            });
   }
+
   private class BookAdapter extends ArrayAdapter<Book> {
     public BookAdapter(Context context, ArrayList<Book> books) {
       super(context, 0, books);
@@ -129,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
       ImageView imageView = convertView.findViewById(R.id.imageView);
 
       textViewTitle.setText("名稱: " + book.title);
-      textViewAuthor.setText("作者" + book.author);
+      textViewAuthor.setText("作者: " + book.author);
       imageView.setImageBitmap(decodeImage(book.image));
 
       return convertView;
