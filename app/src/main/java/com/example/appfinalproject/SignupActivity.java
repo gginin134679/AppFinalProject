@@ -3,6 +3,7 @@ package com.example.appfinalproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText etSignEmail;
     private EditText etSignupPassword;
     private Button btnSignupSignup;
+    private Button btnSignupForget;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +31,24 @@ public class SignupActivity extends AppCompatActivity {
         etSignEmail = findViewById(R.id.et_signup_email);
         etSignupPassword = findViewById(R.id.et_signup_password);
         btnSignupSignup = findViewById(R.id.btn_signup_signup);
+        btnSignupForget = findViewById(R.id.btn_signup_forget);
         mAuth = FirebaseAuth.getInstance();
+        
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = etSignEmail.getText().toString();
-                String password = etSignupPassword.getText().toString();
-                signUp(email,password);
+                if(v.getId() == R.id.btn_signup_signup) {
+                    String email = etSignEmail.getText().toString();
+                    String password = etSignupPassword.getText().toString();
+                    signUp(email, password);
+                } else if (v.getId() == R.id.btn_signup_forget) {
+                    Intent intent = new Intent(SignupActivity.this, ForgotPasswordActivity.class);
+                    startActivity(intent);
+                }
             }
         };
         btnSignupSignup.setOnClickListener(listener);
+        btnSignupForget.setOnClickListener(listener);
     }
 
     private void signUp(String email, String password){
