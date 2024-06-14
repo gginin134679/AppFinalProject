@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     btnMainSearch = findViewById(R.id.btn_main_search);
     listViewBooks = findViewById(R.id.listViewBooks);
     mAuth = FirebaseAuth.getInstance();
+
     db = FirebaseFirestore.getInstance();
     bookList = new ArrayList<>();
     loadBooks();

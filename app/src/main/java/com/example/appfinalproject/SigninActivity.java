@@ -16,8 +16,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SigninActivity extends AppCompatActivity {
-    private final static String defaultEmail = "root@gmail.com";
-    private final static String defaultPassword = "root";
+//    private final static String defaultEmail = "root@gmail.com";
+//    private final static String defaultPassword = "root";
+    private final static String defaultEmail = "123@gmail.com";
+    private final static String defaultPassword = "123456";
     private EditText etLoginEmail;
     private EditText etLoginPassword;
     private Button btnLoginLogin;
@@ -33,6 +35,11 @@ public class SigninActivity extends AppCompatActivity {
         btnLoginLogin = findViewById(R.id.btn_login_login);
         btnLoginSignUp = findViewById(R.id.btn_login_signup);
         mAuth = FirebaseAuth.getInstance();
+
+        //快速登入
+        etLoginEmail.setText(defaultEmail);
+        etLoginPassword.setText(defaultPassword);
+
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
