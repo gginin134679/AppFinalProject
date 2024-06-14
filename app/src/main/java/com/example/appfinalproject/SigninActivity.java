@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,7 @@ public class SigninActivity extends AppCompatActivity {
     private EditText etLoginPassword;
     private Button btnLoginLogin;
     private Button btnLoginSignUp;
+    private TextView tvSigninForget;
     private FirebaseAuth mAuth;
     ManagerInformation managerInformation = ManagerInformation.getInstance();
     @Override
@@ -34,6 +36,7 @@ public class SigninActivity extends AppCompatActivity {
         etLoginPassword = findViewById(R.id.et_login_password);
         btnLoginLogin = findViewById(R.id.btn_login_login);
         btnLoginSignUp = findViewById(R.id.btn_login_signup);
+        tvSigninForget = findViewById(R.id.tv_signin_forget);
         mAuth = FirebaseAuth.getInstance();
 
         //快速登入
@@ -54,11 +57,15 @@ public class SigninActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(SigninActivity.this, SignupActivity.class);
                     SigninActivity.this.startActivity(intent);
+                }else if (v.getId() == R.id.tv_signin_forget) {
+                    Intent intent = new Intent(SigninActivity.this, ForgotPasswordActivity.class);
+                    startActivity(intent);
                 }
             }
         };
         btnLoginLogin.setOnClickListener(listener);
         btnLoginSignUp.setOnClickListener(listener);
+        tvSigninForget.setOnClickListener(listener);
     }
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
