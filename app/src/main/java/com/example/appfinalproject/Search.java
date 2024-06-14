@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -61,7 +62,15 @@ public class Search extends AppCompatActivity {
 
         loadBooks();
         //
-
+        lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Book selectedBook = adapter.getItem(position);
+                Intent intent = new Intent(Search.this, DetailActivity.class);
+                intent.putExtra("documentId", selectedBook.getDocumentId());
+                startActivity(intent);
+            }
+        });
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
