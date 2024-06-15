@@ -52,7 +52,7 @@ public class Feed extends AppCompatActivity {
               Feed.this.startActivity(intent);
             }
           }
-        } else if (v.getId() == R.id.btn_main_search) {
+        } else if (v.getId() == R.id.btn_feed_search) {
           intent.setClass(Feed.this, Search.class);
           Feed.this.startActivity(intent);
         } else if (v.getId() == R.id.btn_feed_home) {
