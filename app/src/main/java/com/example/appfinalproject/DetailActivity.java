@@ -2,11 +2,13 @@ package com.example.appfinalproject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String documentId;
     private Button btnDetailBorrowBook;
+    private Button btnDetailFeed;
     private FirebaseAuth auth;
     private String title, author, image;
     @Override
@@ -42,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewAuthor = findViewById(R.id.textViewAuthor);
         imageView = findViewById(R.id.iv_item_book_pic);
+        btnDetailFeed = findViewById(R.id.btn_detail_feed);
         btnDetailBorrowBook = findViewById(R.id.btn_detail_borrowbook);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -54,6 +58,19 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this, "No document ID provided", Toast.LENGTH_SHORT).show();
         }
         btnDetailBorrowBook.setOnClickListener(v->showBorrowConfirmationDialog());
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                if(v.getId() == R.id.btn_detail_feed){
+                    intent.setClass(DetailActivity.this, Feed.class);
+                    DetailActivity.this.startActivity(intent);
+                }
+            }
+        };
+
+        btnDetailFeed.setOnClickListener(listener);
     }
 
     private void loadBookDetails(String documentId) {
