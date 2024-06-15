@@ -90,6 +90,8 @@ public class SigninActivity extends AppCompatActivity {
                                 intent.setClass(SigninActivity.this, MainActivity.class);
                                 SigninActivity.this.startActivity(intent);
                             }
+                            Toast.makeText(SigninActivity.this, "登入成功",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             // 登入失敗，顯示錯誤訊息
                             Toast.makeText(SigninActivity.this, "Authentication failed.",

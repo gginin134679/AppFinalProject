@@ -18,12 +18,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +28,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Search extends AppCompatActivity {
 
@@ -160,7 +155,7 @@ public class Search extends AppCompatActivity {
 
             TextView textViewTitle = convertView.findViewById(R.id.textViewTitle);
             TextView textViewAuthor = convertView.findViewById(R.id.textViewAuthor);
-            ImageView imageView = convertView.findViewById(R.id.imageView);
+            ImageView imageView = convertView.findViewById(R.id.iv_item_book_pic);
 
             textViewTitle.setText("名稱: " + book.title);
             textViewAuthor.setText("作者: " + book.author);

@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
       TextView textViewTitle = convertView.findViewById(R.id.textViewTitle);
       TextView textViewAuthor = convertView.findViewById(R.id.textViewAuthor);
-      ImageView imageView = convertView.findViewById(R.id.imageView);
+      ImageView imageView = convertView.findViewById(R.id.iv_item_book_pic);
 
       textViewTitle.setText("名稱: " + book.title);
       textViewAuthor.setText("作者: " + book.author);

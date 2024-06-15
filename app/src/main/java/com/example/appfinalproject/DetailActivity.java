@@ -2,7 +2,6 @@ package com.example.appfinalproject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
 
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewAuthor = findViewById(R.id.textViewAuthor);
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.iv_item_book_pic);
         btnDetailBorrowBook = findViewById(R.id.btn_detail_borrowbook);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
