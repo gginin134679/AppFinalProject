@@ -22,7 +22,7 @@ public class Feed extends AppCompatActivity {
   private Button btnFeedHome;
   private Button btnFeedSearch;
   private Button btnFeedPersonal;
-  private Button btnFeedAdd;
+  private FirebaseAuth mAuth;
 
 
 
@@ -31,7 +31,6 @@ public class Feed extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_feed);
 
-    btnFeedAdd = findViewById(R.id.btn_feed_add);
     svFeed = findViewById(R.id.sv_feed);
     lvFeed = findViewById(R.id.lv_feed);
     btnFeedHome = findViewById(R.id.btn_feed_home);
@@ -59,9 +58,6 @@ public class Feed extends AppCompatActivity {
         } else if (v.getId() == R.id.btn_feed_home) {
           intent.setClass(Feed.this, MainActivity.class);
           Feed.this.startActivity(intent);
-        } else if (v.getId() == R.id.btn_feed_add){
-          intent.setClass(Feed.this, Comment.class);
-          Feed.this.startActivity(intent);
         }
       }
     };
@@ -69,6 +65,5 @@ public class Feed extends AppCompatActivity {
     btnFeedPersonal.setOnClickListener(listener);
     btnFeedSearch.setOnClickListener(listener);
     btnFeedHome.setOnClickListener(listener);
-    btnFeedAdd.setOnClickListener(listener);
   }
 }
