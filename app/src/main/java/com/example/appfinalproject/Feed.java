@@ -105,12 +105,12 @@ public class Feed extends AppCompatActivity {
               public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                   for (QueryDocumentSnapshot document : task.getResult()) {
-                    String Bookname = document.getString("Bookname");
+                    //String Bookname = document.getString("Bookname");
                     String avatarPath = document.getString("avatarPath");
                     String message = document.getString("message");
                     String username = document.getString("username");
-                    long time = document.getLong("time");
-                    CommentsList.add(new BookComment(username, message, avatarPath, Bookname));
+                    String documentId = document.getId();
+                    CommentsList.add(new BookComment(username, message, avatarPath, documentId));
                   }
                   // 数据加载完成后设置适配器
                   adapter = new Feed.CommentAdapter(Feed.this, CommentsList);

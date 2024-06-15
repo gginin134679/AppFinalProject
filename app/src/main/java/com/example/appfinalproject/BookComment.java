@@ -4,13 +4,13 @@ public class BookComment {
     String Username;
     String Message;
     String AvatarPath;
-    String bookName;
+    String bookID;
 
-    public BookComment(String username, String message, String avatarPath, String bookname){
+    public BookComment(String username, String message, String avatarPath, String bookID){
         this.Username = username;
         this.Message = message;
         this.AvatarPath = avatarPath;
-        this.bookName = bookname;
+        this.bookID = bookID;
     }
 
     public String getUsername() {
@@ -25,7 +25,7 @@ public class BookComment {
         return AvatarPath;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getBookID() {
+        return bookID;
     }
 }
