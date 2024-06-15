@@ -23,7 +23,7 @@ public class Feed extends AppCompatActivity {
   private Button btnFeedSearch;
   private Button btnFeedPersonal;
   private Button btnFeedAdd;
-
+  private FirebaseAuth mAuth;
 
 
   @Override

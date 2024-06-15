@@ -72,7 +72,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Sign up"
+        android:text="確 認"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/cb_signup_info"
         app:layout_constraintStart_toStartOf="@+id/cb_signup_info"
         app:layout_constraintTop_toBottomOf="@+id/cb_signup_info" />

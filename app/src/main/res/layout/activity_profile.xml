@@ -52,62 +52,61 @@
             android:text="個人" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_profile_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:outlineProvider="none"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_menber_information"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_profile_pic" />
-
     <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="49dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email">
+        app:layout_constraintTop_toBottomOf="@+id/tv_menber_information">
 
-        <Button
-            android:id="@+id/btn_profile_book"
+        <ImageView
+            android:id="@+id/iv_profile_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_weight="1"
-            android:text="借閱書籍" />
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            tools:srcCompat="@tools:sample/avatars" />
 
-        <Button
-            android:id="@+id/btn_profile_log"
+        <TextView
+            android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="36dp"
-            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="Email"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Button
+            android:id="@+id/btn_profile_book_log"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:text="借閱紀錄" />
 
         <Button
-            android:id="@+id/btn_profile_logout"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_profile_change_pic"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:text="更改頭像" />
+
+        <Button
+            android:id="@+id/btn_profile_changepassword"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="變更密碼" />
+
+        <Button
+            android:id="@+id/btn_profile_logout"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="登出" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

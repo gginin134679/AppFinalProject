@@ -1,9 +1,5 @@
 package com.example.appfinalproject;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,13 +9,21 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,45 +32,36 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ManagerAddBook extends AppCompatActivity {
-
+public class ChangeProfileAvatarActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private EditText editTextTitle, editTextAuthor;
-    private Button buttonAdd, buttonChooseImage, buttonViewBooks;
-    private ImageView imageView;
-    private Bitmap selectedImage;
-    private ListView listViewBooks;
+    private Button btnProfileAvatarChooseimage;
+    private Button btnProfileAvatarConfirm;
+    private ImageView ivChangeProfilePic;
     private FirebaseFirestore db;
-
+    private Bitmap selectedImage;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manager_add_book);
-
-        editTextTitle = findViewById(R.id.editTextTitle);
-        editTextAuthor = findViewById(R.id.editTextAuthor);
-        buttonAdd = findViewById(R.id.buttonAdd);
-        buttonChooseImage = findViewById(R.id.buttonChooseImage);
-        imageView = findViewById(R.id.iv_item_book_pic);
-
+        setContentView(R.layout.activity_change_profile_avatar);
+        btnProfileAvatarChooseimage = findViewById(R.id.btn_change_profile_avatar_chooseimage);
+        btnProfileAvatarConfirm = findViewById(R.id.btn_change_profile_avatar_confirm);
+        ivChangeProfilePic = findViewById(R.id.iv_change_profile_pic);
         db = FirebaseFirestore.getInstance();
-
-        buttonChooseImage.setOnClickListener(new View.OnClickListener() {
+        mAuth = FirebaseAuth.getInstance();
+        btnProfileAvatarChooseimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage();
             }
         });
-
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        btnProfileAvatarConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBook();
+                changeProfilePic();
             }
         });
-
     }
-
     private void chooseImage() {
         // 使用 Intent 打開圖片選擇器
         Intent intent = new Intent();
@@ -74,7 +69,29 @@ public class ManagerAddBook extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
-
+    private void changeProfilePic() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String image = encodeImage(selectedImage);
+        // 创建一个书籍对象
+        Map<String, Object> changeProfilePicture = new HashMap<>();
+        changeProfilePicture.put("image", image);
+        // 将书籍添加到 Cloud Firestore 中的 "books" 集合
+        DocumentReference userRef = db.collection("users").document(user.getUid());
+        System.out.println(userRef.get());
+        userRef.update(changeProfilePicture)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ChangeProfileAvatarActivity.this, "更換成功", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("ChangeProfileAvatarActivity", "Error updating user document.", e);
+                    }
+                });
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -86,44 +103,12 @@ public class ManagerAddBook extends AppCompatActivity {
                 // 将 URI 转换为 Bitmap 或者直接使用 Glide、Picasso 等库加载图片
                 selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 // 在 ImageView 中显示选择的图片
-                imageView.setImageBitmap(selectedImage);
+                ivChangeProfilePic.setImageBitmap(selectedImage);
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void addBook() {
-        String title = editTextTitle.getText().toString().trim();
-        String author = editTextAuthor.getText().toString().trim();
-        String image = encodeImage(selectedImage);
-        if (title.isEmpty() || author.isEmpty()) {
-            Toast.makeText(ManagerAddBook.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        // 创建一个书籍对象
-        Map<String, Object> book = new HashMap<>();
-        book.put("title", title);
-        book.put("author", author);
-        book.put("image", image);
-
-        // 将书籍添加到 Cloud Firestore 中的 "books" 集合
-        db.collection("books")
-                .add(book)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(ManagerAddBook.this, "Book added successfully", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ManagerAddBook.this, "Failed to add book", Toast.LENGTH_SHORT).show();
-                        Log.e("ManagerAddBook", "Error adding book", e);
-                    }
-                });
     }
 
     private String encodeImage(Bitmap bitmap) {
