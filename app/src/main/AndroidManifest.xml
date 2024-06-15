@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AppFinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".manager_foul_check"
+            android:exported="false" />
+        <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
         <activity
