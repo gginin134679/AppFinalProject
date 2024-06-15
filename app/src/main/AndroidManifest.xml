@@ -34,9 +34,6 @@
             android:name=".ManagerActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageBooksActivity"
-            android:exported="false" />
-        <activity
             android:name=".Profile"
             android:exported="false" />
         <activity
