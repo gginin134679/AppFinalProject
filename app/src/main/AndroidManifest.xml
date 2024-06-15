@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AppFinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".Comment"
             android:exported="false" />
         <activity

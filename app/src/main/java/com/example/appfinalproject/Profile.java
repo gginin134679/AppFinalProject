@@ -32,6 +32,7 @@ public class Profile extends AppCompatActivity {
     private Button btnProfileLogout;
     private Button btnProfileChangePic;
     private Button btnProfileBookLog;
+    private Button btnProfileChangePassword;
     private ImageView ivProfilePic;
     private TextView tvEmail;
     private FirebaseAuth mAuth;
@@ -49,6 +50,9 @@ public class Profile extends AppCompatActivity {
         btnProfileLogout = findViewById(R.id.btn_profile_logout);
         btnProfileBookLog = findViewById(R.id.btn_profile_book_log);
         btnProfileChangePic = findViewById(R.id.btn_profile_change_pic);
+
+        btnProfileChangePassword = findViewById(R.id.btn_profile_changepassword);
+
         ivProfilePic = findViewById(R.id.iv_profile_pic);
 
         tvEmail = findViewById(R.id.tv_email);
@@ -79,6 +83,9 @@ public class Profile extends AppCompatActivity {
                 }else if(v.getId() == R.id.btn_profile_change_pic) {
                      intent.setClass(Profile.this, ChangeProfileAvatarActivity.class);
                      Profile.this.startActivity(intent);
+                 }else if (v.getId() == R.id.btn_profile_changepassword) {
+                     intent.setClass(Profile.this, ChangePasswordActivity.class);
+                     Profile.this.startActivity(intent);
                  }
             }
         };
@@ -86,6 +93,7 @@ public class Profile extends AppCompatActivity {
         btnProfileSearch.setOnClickListener(listener);
         btnProfileLogout.setOnClickListener(listener);
         btnProfileChangePic.setOnClickListener(listener);
+        btnProfileChangePassword.setOnClickListener(listener);
         loadUserPic();
     }
     @Override
