@@ -19,19 +19,39 @@ public class BookComment {
         return Username;
     }
 
+    public void setUsername(String username) {
+        Username = username;
+    }
+
     public String getMessage() {
         return Message;
+    }
+
+    public void setMessage(String message) {
+        Message = message;
     }
 
     public String getAvatarPath() {
         return AvatarPath;
     }
 
+    public void setAvatarPath(String avatarPath) {
+        AvatarPath = avatarPath;
+    }
+
     public String getBookname() {
         return bookname;
     }
 
+    public void setBookname(String bookname) {
+        this.bookname = bookname;
+    }
+
     public String getDocumentId() {
         return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 }

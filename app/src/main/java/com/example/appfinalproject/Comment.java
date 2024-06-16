@@ -1,21 +1,29 @@
 package com.example.appfinalproject;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Comment extends AppCompatActivity {
@@ -37,6 +45,9 @@ public class Comment extends AppCompatActivity {
         btnCommentSearch = findViewById(R.id.btn_comment_search);
         btnCommentPersonal = findViewById(R.id.btn_comment_personal);
         tietComment = findViewById(R.id.tiet_comment);
+
+        db = FirebaseFirestore.getInstance();
+
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -73,8 +84,10 @@ public class Comment extends AppCompatActivity {
     }
 
     private void sendMsg() {
-        String msg = tietComment.getText().toString();
-        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-        long time = new Date().getTime();
+        String msg = tietComment.getText().toString().trim();
+        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().trim();
+        String avatar = FirebaseAuth.getInstance().getCurrentUser()
+
     }
+
 }
