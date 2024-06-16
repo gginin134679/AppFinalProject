@@ -31,7 +31,7 @@ import java.util.Map;
 public class ManagerAddBook extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
-    private EditText editTextTitle, editTextAuthor;
+    private EditText editTextTitle, editTextAuthor,editTextConetent;
     private Button buttonAdd, buttonChooseImage, buttonViewBooks;
     private ImageView imageView;
     private Bitmap selectedImage;
@@ -47,6 +47,7 @@ public class ManagerAddBook extends AppCompatActivity {
         editTextAuthor = findViewById(R.id.editTextAuthor);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonChooseImage = findViewById(R.id.buttonChooseImage);
+        editTextConetent = findViewById(R.id.editTextContent);
         imageView = findViewById(R.id.iv_item_book_pic);
 
         db = FirebaseFirestore.getInstance();
@@ -98,6 +99,7 @@ public class ManagerAddBook extends AppCompatActivity {
         String title = editTextTitle.getText().toString().trim();
         String author = editTextAuthor.getText().toString().trim();
         String image = encodeImage(selectedImage);
+        String content = editTextConetent.getText().toString().trim();
         if (title.isEmpty() || author.isEmpty()) {
             Toast.makeText(ManagerAddBook.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -107,7 +109,7 @@ public class ManagerAddBook extends AppCompatActivity {
         book.put("title", title);
         book.put("author", author);
         book.put("image", image);
-
+        book.put("content", content);
         // 将书籍添加到 Cloud Firestore 中的 "books" 集合
         db.collection("books")
                 .add(book)

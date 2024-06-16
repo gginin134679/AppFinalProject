@@ -23,6 +23,14 @@
             android:layout_height="wrap_content"
             android:hint="Author" />
 
+        <EditText
+            android:id="@+id/editTextContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Content"
+            android:inputType="text" />
+
         <Button
             android:id="@+id/buttonChooseImage"
             android:layout_width="match_parent"

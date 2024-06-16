@@ -29,21 +29,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity {
-    private TextView textViewTitle, textViewAuthor;
+    private TextView tvDetailTitle, tvDetailAuthor,tvDetailContent;
     private ImageView imageView;
     private FirebaseFirestore db;
     private String documentId;
     private Button btnDetailBorrowBook;
     private Button btnDetailFeed;
     private FirebaseAuth auth;
-    private String title, author, image;
+    private String title, author, image,content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        textViewTitle = findViewById(R.id.textViewTitle);
-        textViewAuthor = findViewById(R.id.textViewAuthor);
+        tvDetailTitle = findViewById(R.id.tv_item_book_title);
+        tvDetailAuthor = findViewById(R.id.tv_item_book_author);
+        tvDetailContent = findViewById(R.id.tv_detail_content);
         imageView = findViewById(R.id.iv_item_book_pic);
         btnDetailFeed = findViewById(R.id.btn_detail_feed);
         btnDetailBorrowBook = findViewById(R.id.btn_detail_borrowbook);
@@ -82,9 +83,10 @@ public class DetailActivity extends AppCompatActivity {
                             title = documentSnapshot.getString("title");
                             author = documentSnapshot.getString("author");
                             image = documentSnapshot.getString("image");
-
-                            textViewTitle.setText("名稱: " + title);
-                            textViewAuthor.setText("作者: " + author);
+                            content = documentSnapshot.getString("content");
+                            tvDetailTitle.setText("名稱: " + title);
+                            tvDetailAuthor.setText("作者: " + author);
+                            tvDetailContent.setText("內容: " + content);
                             if (image != null) {
                                 imageView.setImageBitmap(decodeImage(image));
                             }
@@ -122,7 +124,7 @@ public class DetailActivity extends AppCompatActivity {
         borrowedBook.put("title", title);
         borrowedBook.put("author", author);
         borrowedBook.put("image", image);
-
+        borrowedBook.put("content", content);
         db.collection("users").document(user.getUid()).collection("borrowed_books")
                 .add(borrowedBook)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -139,6 +141,7 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private Bitmap decodeImage(String encodedImage) {
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

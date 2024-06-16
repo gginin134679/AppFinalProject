@@ -77,7 +77,7 @@ public class ChangeProfileAvatarActivity extends AppCompatActivity {
         changeProfilePicture.put("image", image);
         // 将书籍添加到 Cloud Firestore 中的 "books" 集合
         DocumentReference userRef = db.collection("users").document(user.getUid());
-        System.out.println(userRef.get());
+
         userRef.update(changeProfilePicture)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

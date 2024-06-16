@@ -22,8 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.ByteArrayOutputStream;
-
 public class Profile extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Button btnProfileHome;
@@ -31,7 +29,7 @@ public class Profile extends AppCompatActivity {
 
     private Button btnProfileLogout;
     private Button btnProfileChangePic;
-    private Button btnProfileBookLog;
+    private Button btnProfileReturnBooks;
     private Button btnProfileChangePassword;
     private ImageView ivProfilePic;
     private TextView tvEmail;
@@ -48,7 +46,7 @@ public class Profile extends AppCompatActivity {
 
         btnProfileSearch = findViewById(R.id.btn_profile_search);
         btnProfileLogout = findViewById(R.id.btn_profile_logout);
-        btnProfileBookLog = findViewById(R.id.btn_profile_book_log);
+        btnProfileReturnBooks = findViewById(R.id.btn_profile_return_books);
         btnProfileChangePic = findViewById(R.id.btn_profile_change_pic);
 
         btnProfileChangePassword = findViewById(R.id.btn_profile_changepassword);
@@ -86,6 +84,9 @@ public class Profile extends AppCompatActivity {
                  }else if (v.getId() == R.id.btn_profile_changepassword) {
                      intent.setClass(Profile.this, ChangePasswordActivity.class);
                      Profile.this.startActivity(intent);
+                 }else if (v.getId() == R.id.btn_profile_return_books) {
+                     intent.setClass(Profile.this, ReturnBooksActivity.class);
+                     Profile.this.startActivity(intent);
                  }
             }
         };
@@ -94,6 +95,7 @@ public class Profile extends AppCompatActivity {
         btnProfileLogout.setOnClickListener(listener);
         btnProfileChangePic.setOnClickListener(listener);
         btnProfileChangePassword.setOnClickListener(listener);
+        btnProfileReturnBooks.setOnClickListener(listener);
         loadUserPic();
     }
     @Override

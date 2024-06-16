@@ -101,8 +101,9 @@ public class MainActivity extends AppCompatActivity {
                     String title = document.getString("title");
                     String author = document.getString("author");
                     String image = document.getString("image");
+                    String content = document.getString("content");
                     String documentId = document.getId();
-                    bookList.add(new Book(title, author, image,documentId));
+                    bookList.add(new Book(title, author, image,documentId,content));
                   }
                   // 数据加载完成后设置适配器
                   adapter = new BookAdapter(MainActivity.this, bookList);
@@ -127,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
       Book book = getItem(position);
 
-      TextView textViewTitle = convertView.findViewById(R.id.textViewTitle);
-      TextView textViewAuthor = convertView.findViewById(R.id.textViewAuthor);
+      TextView textViewTitle = convertView.findViewById(R.id.tv_item_book_title);
+      TextView textViewAuthor = convertView.findViewById(R.id.tv_item_book_author);
       ImageView imageView = convertView.findViewById(R.id.iv_item_book_pic);
 
       textViewTitle.setText("名稱: " + book.title);
