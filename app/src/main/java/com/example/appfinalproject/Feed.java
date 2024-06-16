@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -97,7 +96,7 @@ public class Feed extends AppCompatActivity {
     btnFeedAdd.setOnClickListener(listener);
   }
   private void loadComments() {
-    // 从 Cloud Firestore 中读取书籍数据
+    // 从 Cloud Firestore 中读取評論数据
     db.collection("CommentMessage")
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -105,12 +104,12 @@ public class Feed extends AppCompatActivity {
               public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                   for (QueryDocumentSnapshot document : task.getResult()) {
-                    //String Bookname = document.getString("Bookname");
+                    String Bookname = document.getString("Bookname");
                     String avatarPath = document.getString("avatarPath");
                     String message = document.getString("message");
                     String username = document.getString("username");
                     String documentId = document.getId();
-                    CommentsList.add(new BookComment(username, message, avatarPath, documentId));
+                    CommentsList.add(new BookComment(username, message, avatarPath, Bookname, documentId));
                   }
                   // 数据加载完成后设置适配器
                   adapter = new Feed.CommentAdapter(Feed.this, CommentsList);
@@ -135,7 +134,6 @@ public class Feed extends AppCompatActivity {
       BookComment Comment = getItem(position);
 
       TextView tvItemCommentUsername = convertView.findViewById(R.id.tv_item_comment_username);
-      TextView tvItemCommentTime = convertView.findViewById(R.id.tv_item_comment_time);
       TextView tvItemCommentMessage = convertView.findViewById(R.id.tv_item_comment_message);
       ImageView ivItemCommentAvatar = convertView.findViewById(R.id.iv_item_comment_avatar);
 
