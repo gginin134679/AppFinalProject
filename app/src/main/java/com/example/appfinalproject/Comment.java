@@ -72,7 +72,9 @@ public class Comment extends AppCompatActivity {
                     intent.setClass(Comment.this, MainActivity.class);
                     Comment.this.startActivity(intent);
                 } else if (v.getId() == R.id.btn_comment_send){
-
+                    sendMsg();
+                    intent.setClass(Comment.this, Feed.class);
+                    Comment.this.startActivity(intent);
                 }
             }
         };
@@ -86,8 +88,32 @@ public class Comment extends AppCompatActivity {
     private void sendMsg() {
         String msg = tietComment.getText().toString().trim();
         String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().trim();
-        String avatar = FirebaseAuth.getInstance().getCurrentUser()
+        //String avatar = FirebaseAuth.getInstance().getCurrentUser();
+        //String bookID =
+        if (msg.isEmpty()) {
+            Toast.makeText(Comment.this, "Please leave your comment before sending it.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, Object> comment = new HashMap<>();
+        comment.put("message", msg);
+        comment.put("username", username);
+        //comment.put("avatarPath", avatar);
+        //comment.put("bookID", bookID);
 
+        db.collection("CommentMassage")
+                .add(comment)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(Comment.this, "Comment added successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Comment.this, "Failed to leave a comment.", Toast.LENGTH_SHORT).show();
+                        Log.e("Comment", "Error leaving comment", e);
+                    }
+                });
     }
-
 }
