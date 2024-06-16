@@ -37,6 +37,7 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnDetailFeed;
     private FirebaseAuth auth;
     private String title, author, image,content;
+    ManagerInformation managerInformation = ManagerInformation.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,10 @@ public class DetailActivity extends AppCompatActivity {
                             author = documentSnapshot.getString("author");
                             image = documentSnapshot.getString("image");
                             content = documentSnapshot.getString("content");
+                            //
+                            managerInformation.Bookname = title;
+                            managerInformation.Image = image;
+                            //
                             tvDetailTitle.setText("名稱: " + title);
                             tvDetailAuthor.setText("作者: " + author);
                             tvDetailContent.setText("內容: " + content);

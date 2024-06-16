@@ -1,11 +1,14 @@
 package com.example.appfinalproject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class Comment extends AppCompatActivity {
     private Button btnCommentSend;
@@ -86,34 +90,50 @@ public class Comment extends AppCompatActivity {
     }
 
     private void sendMsg() {
-        String msg = tietComment.getText().toString().trim();
-        String username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().trim();
-        //String avatar = FirebaseAuth.getInstance().getCurrentUser();
-        //String bookID =
-        if (msg.isEmpty()) {
-            Toast.makeText(Comment.this, "Please leave your comment before sending it.", Toast.LENGTH_SHORT).show();
+        ManagerInformation managerInformation = ManagerInformation.getInstance();
+        String username = managerInformation.Email;
+        String bookname = managerInformation.Bookname;
+        String message = tietComment.getText().toString();
+        String image = managerInformation.Image;
+
+        if (username.isEmpty() || bookname.isEmpty() || message.isEmpty()) {
+            Toast.makeText(this, "請填寫所有欄位", Toast.LENGTH_SHORT).show();
             return;
         }
-        Map<String, Object> comment = new HashMap<>();
-        comment.put("message", msg);
-        comment.put("username", username);
-        //comment.put("avatarPath", avatar);
-        //comment.put("bookID", bookID);
 
-        db.collection("CommentMassage")
-                .add(comment)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(Comment.this, "Comment added successfully", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Comment.this, "Failed to leave a comment.", Toast.LENGTH_SHORT).show();
-                        Log.e("Comment", "Error leaving comment", e);
+        Map<String, Object> comment = new HashMap<>();
+        comment.put("bookname", bookname);
+        comment.put("username", username);
+        comment.put("message", message);
+        comment.put("image", image);
+
+        db.collection("books")
+                .whereEqualTo("title", bookname)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        String bookId = task.getResult().getDocuments().get(0).getId();
+                        db.collection("books").document(bookId).collection("comments").add(comment)
+                                .addOnSuccessListener(documentReference -> {
+                                    Toast.makeText(this, "留言成功", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Comment.this, Feed.class);
+                                    startActivity(intent);
+                                    finish(); // 確保當前活動結束
+                                })
+                                .addOnFailureListener(e -> Toast.makeText(this, "留言失敗", Toast.LENGTH_SHORT).show());
+                    } else {
+                        Toast.makeText(this, "未找到書名", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private String encodeImage(Bitmap bitmap) {
+        if (bitmap == null) {
+            return "";
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 }

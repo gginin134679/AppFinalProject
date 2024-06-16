@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Feed extends AppCompatActivity {
   private ListView lvFeed;
@@ -37,12 +38,10 @@ public class Feed extends AppCompatActivity {
   private Button btnFeedPersonal;
   private Button btnFeedAdd;
   private FirebaseAuth mAuth;
-  private ArrayList<BookComment> CommentsList;
-  private Feed.CommentAdapter adapter;
+  private FeedAdapter feedAdapter;
+  private ArrayList<BookComment> comments;
   private FirebaseFirestore db;
   private static final String TAG = "Feed";
-
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class Feed extends AppCompatActivity {
     mAuth = FirebaseAuth.getInstance();
 
     db = FirebaseFirestore.getInstance();
-    CommentsList = new ArrayList<>();
+    comments = new ArrayList<>();
 
     loadComments();
 
@@ -95,33 +94,49 @@ public class Feed extends AppCompatActivity {
     btnFeedHome.setOnClickListener(listener);
     btnFeedAdd.setOnClickListener(listener);
   }
+
   private void loadComments() {
-    // 从 Cloud Firestore 中读取評論数据
-    db.collection("CommentMessage")
+    ManagerInformation managerInformation = ManagerInformation.getInstance();
+    String bookname = managerInformation.Bookname;
+
+    db.collection("books")
+            .whereEqualTo("title", bookname)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
               @Override
               public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                  for (QueryDocumentSnapshot document : task.getResult()) {
-                    String Bookname = document.getString("Bookname");
-                    String avatarPath = document.getString("avatarPath");
-                    String message = document.getString("message");
-                    String username = document.getString("username");
-                    String documentId = document.getId();
-                    CommentsList.add(new BookComment(username, message, avatarPath, Bookname, documentId));
-                  }
-                  // 数据加载完成后设置适配器
-                  adapter = new Feed.CommentAdapter(Feed.this, CommentsList);
-                  lvFeed.setAdapter(adapter);
+                  String bookId = task.getResult().getDocuments().get(0).getId();
+                  db.collection("books").document(bookId).collection("comments")
+                          .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                              if (task.isSuccessful()) {
+                                comments.clear();
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                  String username = document.getString("username");
+                                  String message = document.getString("message");
+                                  String image = document.getString("image");
+
+                                  comments.add(new BookComment(username, message, image));
+                                }
+                                // 確保在UI執行緒中更新適配器
+                                feedAdapter = new FeedAdapter(Feed.this, comments);
+                                lvFeed.setAdapter(feedAdapter);
+                              } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                              }
+                            }
+                          });
                 } else {
-                  Log.d(TAG, "Error getting documents: ", task.getException());
+                  Log.d(TAG, "Error getting book: ", task.getException());
                 }
               }
             });
   }
-  private class CommentAdapter extends ArrayAdapter<BookComment> {
-    public CommentAdapter(Context context, ArrayList<BookComment> comments) {
+  // Inner class for the custom adapter
+  private class FeedAdapter extends ArrayAdapter<BookComment> {
+    public FeedAdapter(Context context, List<BookComment> comments) {
       super(context, 0, comments);
     }
 
@@ -131,19 +146,18 @@ public class Feed extends AppCompatActivity {
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_comment, parent, false);
       }
 
-      BookComment Comment = getItem(position);
+      BookComment comment = getItem(position);
 
-      TextView tvItemCommentUsername = convertView.findViewById(R.id.tv_item_comment_username);
-      TextView tvItemCommentMessage = convertView.findViewById(R.id.tv_item_comment_message);
-      ImageView ivItemCommentAvatar = convertView.findViewById(R.id.iv_item_comment_avatar);
+      ImageView ivAvatar = convertView.findViewById(R.id.iv_item_comment_avatar);
+      TextView tvUsername = convertView.findViewById(R.id.tv_item_comment_username);
+      TextView tvMessage = convertView.findViewById(R.id.tv_item_comment_message);
 
-      tvItemCommentUsername.setText(Comment.Username);
-      tvItemCommentMessage.setText(Comment.Message);
-      ivItemCommentAvatar.setImageBitmap(decodeImage(Comment.AvatarPath));
+      ivAvatar.setImageBitmap(decodeImage(comment.image));
+      tvUsername.setText(comment.username);
+      tvMessage.setText(comment.message);
 
       return convertView;
     }
-
     private Bitmap decodeImage(String encodedImage) {
       byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
       return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

@@ -4,6 +4,9 @@ public class ManagerInformation {
     private static ManagerInformation instance;
     public final static String managerEmail = "manager@gmail.com";
     public final static String managerPassword = "manager";
+    public String Email;
+    public String Bookname;
+    public String Image;
     public boolean isManager = false;
 
     private ManagerInformation() {
