@@ -87,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
                             content = documentSnapshot.getString("content");
                             //
                             managerInformation.Bookname = title;
-                            managerInformation.Image = image;
+                            if (managerInformation.Image == null) {managerInformation.Image = image;}
                             //
                             tvDetailTitle.setText("名稱: " + title);
                             tvDetailAuthor.setText("作者: " + author);

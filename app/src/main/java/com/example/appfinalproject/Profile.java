@@ -112,6 +112,7 @@ public class Profile extends AppCompatActivity {
                         if (documentSnapshot.exists()) {
                             String imageUrl = documentSnapshot.getString("image");
                             if (imageUrl != null) {
+                                managerInformation.Image = imageUrl;
                                 ivProfilePic.setImageBitmap(decodeImage(imageUrl));
                             } else {
                                 Toast.makeText(Profile.this, "No image found for user", Toast.LENGTH_SHORT).show();
